@@ -31,7 +31,7 @@ def login():
             password = check_password_hash(user.password, password)
             if password: 
                 # login_user(user)
-                response = jsonify({"msg": "login successful jwt"})
+                response = jsonify({"success": "login successful jwt"})
                 access_token = create_access_token(identity=user.id)
                 set_access_cookies(response, access_token)
                 return response

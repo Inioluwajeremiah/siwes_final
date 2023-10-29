@@ -12,7 +12,7 @@ logout_blueprint = Blueprint("logout", __name__)
 @jwt_required()
 def logout():
     # logout_user()
-    response = jsonify({"msg": "logout successful jwt"})
+    response = jsonify({"success": "logout successful jwt"})
     unset_jwt_cookies(response)
     return response, HTTP_200_OK
     # return {"success": "User logged out successfully!", "user id": f"{current_user.get_id()}"}
