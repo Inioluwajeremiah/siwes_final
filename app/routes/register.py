@@ -20,14 +20,14 @@ def register():
     user = User.query.filter_by(email=email).first()
 
     if user:
-        return{"message": f"{email} already registered"}
+        return{"error": f"{email} already registered"}
 
     if not email:
-        return make_response({"message":"Email field required"}), HTTP_400_BAD_REQUEST
+        return make_response({"error":"Email field required"}), HTTP_400_BAD_REQUEST
     if not password:
-        return make_response({"message":"Password field required"}), HTTP_400_BAD_REQUEST
+        return make_response({"error":"Password field required"}), HTTP_400_BAD_REQUEST
     if not role:
-        return make_response({"message":"Role field required"}), HTTP_400_BAD_REQUEST
+        return make_response({"error":"Role field required"}), HTTP_400_BAD_REQUEST
 
     password = generate_password_hash(password)
 
@@ -36,13 +36,9 @@ def register():
         user = User(email=email, password=password, role=role)
         db.session.add(user)
         db.session.commit()
-        return {"message": f"{role} registration successfull!"}
+        return {"success": f"{role} registration successfull!"}
     except Exception as e:
-        return {"message": f"{e}"}
-
-@register_blueprint.get('/')
-def t():
-    return {"message":"home"}
+        return {"error": f"{e}"}
 
 
 
