@@ -14,7 +14,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    CORS(app,  resources={r"/*": {"origins": ["http://localhost:3000", "https://siwes-eight.vercel.app"]}}, supports_credentials=True, allow_headers=["Content-Type"])
+    CORS(app,  resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:3001", "https://siwes-eight.vercel.app"]}}, supports_credentials=True, allow_headers=["Content-Type"])
     db.init_app(app)
     migrate = Migrate(app, db)
     login_manager.init_app(app)
