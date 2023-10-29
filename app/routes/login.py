@@ -1,10 +1,11 @@
-from flask import Blueprint, request, make_response
+from flask import Blueprint, request, make_response, jsonify
 from markupsafe import Markup
 from app.databaseModel import User
 from app import db
 from werkzeug.security import   check_password_hash
 from flask_login import login_user
 from app.status_codes import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from flask_jwt_extended import set_access_cookies, create_access_token
 
 login_blueprint = Blueprint("login", __name__)
 
@@ -29,8 +30,12 @@ def login():
         if user:
             password = check_password_hash(user.password, password)
             if password: 
-                login_user(user)
-                return {"success": "login successfull!"}, HTTP_200_OK
+                # login_user(user)
+                response = jsonify({"msg": "login successful jwt"})
+                access_token = create_access_token(identity=user.id)
+                set_access_cookies(response, access_token)
+                return response
+                # return {"success": "login successfull!"}, HTTP_200_OK
             return {"error":"Password incorrect"}, HTTP_400_BAD_REQUEST
         return {"error": f"{email} not registered!"}, HTTP_400_BAD_REQUEST
     except Exception as e:

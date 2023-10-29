@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from datetime import timedelta
 from .config import Config
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -17,6 +18,7 @@ def create_app():
     CORS(app,  resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:3001", "https://siwes-eight.vercel.app"]}}, supports_credentials=True, allow_headers=["Content-Type"])
     db.init_app(app)
     migrate = Migrate(app, db)
+    jwt = JWTManager(app)
     login_manager.init_app(app)
     login_manager.remember_cookie_duration = timedelta(days=30)
 
