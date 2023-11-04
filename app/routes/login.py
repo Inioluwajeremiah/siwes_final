@@ -28,6 +28,9 @@ def login():
     try:
         email = email.lower()
         user = User.query.filter_by(email=email).first()
+        if user is None:
+            return {"error": f"{email} not registered!"}, HTTP_400_BAD_REQUEST
+
         if user:
             password = check_password_hash(user.password, password)
             if password: 
@@ -36,6 +39,5 @@ def login():
                 return jsonify({"success": "login successful", "access_token": access_token})
                 # return {"success": "login successfull!"}, HTTP_200_OK
             return {"error":"Password incorrect"}, HTTP_400_BAD_REQUEST
-        return {"error": f"{email} not registered!"}, HTTP_400_BAD_REQUEST
     except Exception as e:
         return {"error": f"{e}"}, HTTP_400_BAD_REQUEST
