@@ -33,7 +33,7 @@ def login():
             return {"error": f"{email} not registered!"}, HTTP_400_BAD_REQUEST
         
         # check if role selected matches user role
-        if user.role is not role:
+        if user.role != role:
             return {"error": f"{email} is not a registered {role}!"}, HTTP_400_BAD_REQUEST
         
         if user and user.role == role:
