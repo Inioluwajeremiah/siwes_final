@@ -14,6 +14,7 @@ def login():
     email = request.json['email']
     password = request.json['password']
     rememberme = request.json['rememberme']
+    role = request.json['role']
 
     email = Markup.escape(email)
     password = Markup.escape(password)
@@ -23,15 +24,19 @@ def login():
         return make_response({"error":"Email field required"}), HTTP_400_BAD_REQUEST
     if not password:
         return make_response({"error":"Password field required"}), HTTP_400_BAD_REQUEST
-
-
+ 
     try:
         email = email.lower()
         user = User.query.filter_by(email=email).first()
+        # check if user exists
         if user is None:
             return {"error": f"{email} not registered!"}, HTTP_400_BAD_REQUEST
-
-        if user:
+        
+        # check if role selected matches user role
+        if user.role is not role:
+            return {"error": f"{email} is not a registered {role}!"}, HTTP_400_BAD_REQUEST
+        
+        if user and user.role == role:
             password = check_password_hash(user.password, password)
             if password: 
                 # login_user(user)
