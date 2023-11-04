@@ -35,6 +35,9 @@ def get_student_profile():
      user_id = get_jwt_identity()
      student_profile = StudentProfile.query.filter_by(student_id=user_id).first()
 
+     if student_profile is None:
+          return {"error":"No record found, kindly complete your profile", "nill":True}, HTTP_204_NO_CONTENT
+
      if student_profile:
           student_profile_data = { 
                "firstName":student_profile.firstName, 
