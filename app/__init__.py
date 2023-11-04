@@ -15,7 +15,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    CORS(app,  resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:3001", "https://siwes-eight.vercel.app"]}}, supports_credentials=True, allow_headers=["Content-Type"])
+    CORS(app,  resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:3001", "https://siwes-eight.vercel.app"]}}, supports_credentials=True)
     db.init_app(app)
     migrate = Migrate(app, db)
     jwt = JWTManager(app)
@@ -38,12 +38,14 @@ def create_app():
     from .routes.supervisor import supervisor_blueprint
     from .routes.student_profile import student_profile_blueprint
     from .routes.logout import logout_blueprint
+    from .routes.supervisor_profile import supervisor_profile_blueprint
 
     app.register_blueprint(register_blueprint, url_prefix="/register")
     app.register_blueprint(login_blueprint, url_prefix="/login")
     app.register_blueprint(student_blueprint, url_prefix="/student")
     app.register_blueprint(supervisor_blueprint, url_prefix='/supervisor')
     app.register_blueprint(student_profile_blueprint, url_prefix="/student_profile")
+    app.register_blueprint(supervisor_profile_blueprint, url_prefix="/supervisor_profile")
     app.register_blueprint(logout_blueprint, url_prefix="/logout")
 
     return app

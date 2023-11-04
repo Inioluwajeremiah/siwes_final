@@ -17,6 +17,8 @@ def register():
     password = Markup.escape(password)
     role = Markup.escape(role)
 
+    email = email.lower()
+
     user = User.query.filter_by(email=email).first()
 
     if user:
@@ -32,7 +34,6 @@ def register():
     password = generate_password_hash(password)
 
     try:
-        email = email.lower()
         user = User(email=email, password=password, role=role)
         db.session.add(user)
         db.session.commit()

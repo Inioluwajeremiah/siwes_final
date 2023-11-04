@@ -48,7 +48,7 @@ class StudentActivity(db.Model):
     def __repr__(self):
         return f'Student activities: \n{self.id} \n{self.activity} \n{self.weekNo} \n{self.date}'
     
-
+# let summary = job for the week
 class StudentWeeklySummary(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     summary = db.Column(db.String(300), nullable=False)
@@ -66,12 +66,12 @@ class StudentWeeklySummary(db.Model):
 
 class SupervisorProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    salutation = db.Column(db.String(50), nullable=False)
     firstName = db.Column(db.String(100), nullable=False)
     middleName = db.Column(db.String(100), nullable=False)
     lastName = db.Column(db.String(100), nullable=False)
     gender  = db.Column(db.String(100), nullable=False) 
     department = db.Column(db.String(300), nullable=False)
-    salutation = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
         return f'Supervisor Profile: \n{self.id} \n{self.name} \n{self.department}'
@@ -80,12 +80,12 @@ class SupervisorProfile(db.Model):
 
 class SupervisorActivity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, nullable=False)
     weekNo = db.Column(db.Integer, nullable=False)
-    remark = db.Column(db.String(200), nullable = False)
     date = db.Column(db.DateTime, nullable = False)
-
+    student_email =  db.Column(db.String(100), nullable=False) 
+    remark = db.Column(db.String(200), nullable = False)
     supervisor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
 
     def __repr__(self):
         return f'Supervisor Activity: \n{self.id} \n{self.remark} \n{self.date}'
