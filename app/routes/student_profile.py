@@ -36,7 +36,7 @@ def get_student_profile():
      student_profile = StudentProfile.query.filter_by(student_id=user_id).first()
 
      if student_profile is None:
-          return {"error":"No record found, kindly complete your profile", "nill":True}, HTTP_204_NO_CONTENT
+          return {"error":"No record found kindly complete your profile"}, HTTP_400_BAD_REQUEST
 
      if student_profile:
           student_profile_data = { 
